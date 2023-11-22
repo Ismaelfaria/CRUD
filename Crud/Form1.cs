@@ -59,10 +59,12 @@ namespace Crud
                 conn.Open();
 
                 var query = "'%"+txtBuscar.Text+"%'";
-                var comandSelect = "SELECT * FROM contato WHERE nome LIKE" + query +
-                    " OR email LIKE "+ query ;
+
+                var comandSelect = "SELECT * FROM contatos WHERE nome LIKE " + query +
+                    " OR email LIKE "+query;
 
                 MySqlCommand commandSelect = new MySqlCommand(comandSelect, conn);
+
                 MySqlDataReader reader = commandSelect.ExecuteReader();
 
                 listaContatos.Items.Clear();
@@ -71,10 +73,7 @@ namespace Crud
                 {
                     string[] row =
                     {
-                        reader.GetString(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetString(3),
+
                     };
                 };
             }
