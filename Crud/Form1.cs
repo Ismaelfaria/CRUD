@@ -21,10 +21,7 @@ namespace Crud
         {
             InitializeComponent();
 
-            listaContatos.Columns.Add("Id", 30, HorizontalAlignment.Left);
-            listaContatos.Columns.Add("Nome", 150, HorizontalAlignment.Left);
-            listaContatos.Columns.Add("E-mail", 150, HorizontalAlignment.Left);
-            listaContatos.Columns.Add("Telefone", 150, HorizontalAlignment.Left);
+      
         }
 
         private void SalvarContato_Click(object sender, EventArgs e)
@@ -65,11 +62,12 @@ namespace Crud
                 conn.Open();
 
                 var query = "'%"+txtBuscar.Text+"%'";
-                var comandSelect = "SELECT * FROM contato WHERE nome LIKE " + query + 
-                                   " OR email LIKE " + query;
+                var comandSelect = "SELECT * FROM contato WHERE nome LIKE "+ query
+                    + " OR email LIKE "+ query;
 
                 MySqlCommand commandSelect = new MySqlCommand(comandSelect, conn);
                 MySqlDataReader reader = commandSelect.ExecuteReader();
+
 
                 listaContatos.Items.Clear();
 
@@ -83,10 +81,10 @@ namespace Crud
                         reader.GetString(3),
                     };
 
-                    var List_linhaContato = new ListViewItem(row);
+                    var linhaListContatos = new ListViewItem(row);
 
-                    listaContatos.Items.Add(List_linhaContato);
-                };
+                    listaContatos.Items.Add(linhaListContatos);
+                }
 
             }
             catch (Exception ex)
