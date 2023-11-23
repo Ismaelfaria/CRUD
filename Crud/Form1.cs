@@ -21,7 +21,16 @@ namespace Crud
         {
             InitializeComponent();
 
-      
+            listaContatos.View = View.Details;
+            listaContatos.LabelEdit = true;
+            listaContatos.AllowColumnReorder = true;
+            listaContatos.FullRowSelect = true;
+            listaContatos.GridLines = true;
+
+            listaContatos.Columns.Add("Id", 30, HorizontalAlignment.Left);
+            listaContatos.Columns.Add("Nome", 150, HorizontalAlignment.Left);
+            listaContatos.Columns.Add("Email", 150, HorizontalAlignment.Left);
+            listaContatos.Columns.Add("Telefone", 150, HorizontalAlignment.Left);
         }
 
         private void SalvarContato_Click(object sender, EventArgs e)
@@ -30,18 +39,18 @@ namespace Crud
             {
                 conn = new MySqlConnection(sql);
 
+                conn.Open();
+
                 var comandInsert = "INSERT INTO contato (nome, email, telefone) " +
-                    "VALUES " +
-                    "('" + txtName.Text + "', '" +
-                           txtEmail.Text + "', '" +
-                           txtTelefone.Text + "')";
+                    "VALUES " + "('" + txtName.Text + "', '" +
+                                      txtEmail.Text + "', '" +
+                                      txtTelefone.Text + "') ";
 
                 MySqlCommand commandInsert = new MySqlCommand(comandInsert, conn);
 
-                conn.Open();
                 commandInsert.ExecuteReader();
 
-                MessageBox.Show("Deu certo, contato agendado!!");
+                MessageBox.Show("Deu certo, contato adicionado");
 
             }
             catch (Exception ex)
@@ -61,13 +70,12 @@ namespace Crud
                 conn = new MySqlConnection(sql);
                 conn.Open();
 
-                var query = "'%"+txtBuscar.Text+"%'";
-                var comandSelect = "SELECT * FROM contato WHERE nome LIKE "+ query
-                    + " OR email LIKE "+ query;
+                var query = "'%" + txtBuscar.Text + "%'";
+                var comandSelect = "SELECT * FROM contato WHERE nome LIKE " + query +
+                    " OR email LIKE " + query;
 
                 MySqlCommand commandSelect = new MySqlCommand(comandSelect, conn);
                 MySqlDataReader reader = commandSelect.ExecuteReader();
-
 
                 listaContatos.Items.Clear();
 
@@ -75,17 +83,15 @@ namespace Crud
                 {
                     string[] row =
                     {
-                        reader.GetString(0),
-                        reader.GetString(1),
-                        reader.GetString(2),
-                        reader.GetString(3),
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
                     };
 
-                    var linhaListContatos = new ListViewItem(row);
-
-                    listaContatos.Items.Add(linhaListContatos);
+                    var linhaListcontatos = new ListViewItem(row);
+                    listaContatos.Items.Add(linhaListcontatos);
                 }
-
             }
             catch (Exception ex)
             {
